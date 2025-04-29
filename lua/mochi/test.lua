@@ -11,14 +11,14 @@ Window.open({
     name = 'test',
     pos = 'cursor',
     title = false,
-    border = 'single',
+    border = 'medium',
 })
 
 Window.open({
     name = 'test2',
     pos = 'center',
     title = true,
-    border = 'rounded',
+    border = 'black',
     parent_win = 'test',
 })
 
@@ -32,3 +32,4 @@ vim.keymap.set({ 'n', 'v' }, '<RightMouse>', function()
         border = 'none',
     })
 end)
+

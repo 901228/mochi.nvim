@@ -12,7 +12,8 @@ local state = require('mochi.ui.state')
 ---| 'single'
 ---| 'double'
 ---| 'rounded'
----| 'thick'
+---| 'medium'
+---| 'black'
 ---| 'none'
 
 ---@class mochi.ui.window.opts
@@ -87,8 +88,10 @@ function M.open(opts)
     end
 
     local winhl = 'Normal:Normal,FloatBorder:LineNr'
-    if opts.border == 'thick' then
+    if opts.border == 'medium' then
         win_opts.border = { '┏', '━', '┓', '┃', '┛', '━', '┗', '┃' }
+    elseif opts.border == 'black' then
+        win_opts.border = { '▄', '▄', '▄', '█', '▀', '▀', '▀', '█' }
     elseif opts.border == 'single' then
         win_opts.border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
     elseif opts.border == 'double' then
