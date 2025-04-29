@@ -1,19 +1,26 @@
 local Window = require('mochi.ui.window')
 
 -- Window.open({
---     name = 'test',
---     pos = 'cursor',
+--     name = 'test0',
+--     pos = 'mouse',
 --     title = false,
---     border = true,
+--     border = 'double',
 -- })
---
--- Window.open({
---     name = 'test2',
---     pos = 'center',
---     title = true,
---     border = false,
---     parent_win = 'test',
--- })
+
+Window.open({
+    name = 'test',
+    pos = 'cursor',
+    title = false,
+    border = 'single',
+})
+
+Window.open({
+    name = 'test2',
+    pos = 'center',
+    title = true,
+    border = 'rounded',
+    parent_win = 'test',
+})
 
 vim.keymap.set({ 'n', 'v' }, '<RightMouse>', function()
     vim.cmd.exec('"normal! \\<RightMouse>"')
@@ -22,6 +29,6 @@ vim.keymap.set({ 'n', 'v' }, '<RightMouse>', function()
         name = 'mouse-test',
         pos = 'mouse',
         title = false,
-        border = true,
+        border = 'none',
     })
 end)

@@ -8,12 +8,19 @@ local state = require('mochi.ui.state')
 ---| 'win' # window position
 ---| 'center' # center of screen
 
+---@alias mochi.ui.window.opts.border
+---| 'single'
+---| 'double'
+---| 'rounded'
+---| 'thick'
+---| 'none'
+
 ---@class mochi.ui.window.opts
 ---@field name string
 ---@field pos mochi.ui.window.opts.pos
 ---@field relative_win? integer
 ---@field title boolean
----@field border boolean
+---@field border mochi.ui.window.opts.border
 ---@field parent_win? string
 
 ---@param opts vim.api.keyset.win_config
@@ -78,11 +85,23 @@ function M.open(opts)
         win_opts.title = opts.name
         win_opts.title_pos = 'center'
     end
-    if opts.border then win_opts.border = { '┏', '━', '┓', '┃', '┛', '━', '┗', '┃' } end
+
+    local winhl = 'Normal:Normal,FloatBorder:LineNr'
+    if opts.border == 'thick' then
+        win_opts.border = { '┏', '━', '┓', '┃', '┛', '━', '┗', '┃' }
+    elseif opts.border == 'single' then
+        win_opts.border = { '┌', '─', '┐', '│', '┘', '─', '└', '│' }
+    elseif opts.border == 'double' then
+        win_opts.border = { '╔', '═', '╗', '║', '╝', '═', '╚', '║' }
+    elseif opts.border == 'rounded' then
+        win_opts.border = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
+    elseif opts.border == 'none' then
+        winhl = 'Normal:Normal'
+    end
 
     -- create window
     state[opts.name].win = vim.api.nvim_open_win(state[opts.name].buf, true, win_opts)
-    vim.wo[state[opts.name].win].winhl = 'Normal:Normal,FloatBorder:LineNr'
+    vim.wo[state[opts.name].win].winhl = winhl
     vim.bo[state[opts.name].buf].filetype = opts.name
 
     -- setup key mappings
